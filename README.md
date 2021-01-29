@@ -1,7 +1,9 @@
 # redictionary
 
+[![Build Status](https://travis-ci.com/planetoryd/redictionary.svg?branch=main)](https://travis-ci.com/planetoryd/redictionary)
+
 - [x] Mdict(mdx) format
-- [x] Open by shortcut, by default is `Ctrl+Shift+C`
+- [x] Open by shortcut, by default is `Ctrl+Alt+C`
 - [x] Auto-detect clipboard
 
 ```bash

@@ -95,7 +95,7 @@ function main() {
       }
     }
   });
-  globalShortcut.register('CommandOrControl+Shift+C', () => {
+  globalShortcut.register('CommandOrControl+Alt+C', () => {
     console.log("hotkey")
     if(visible)
       mainWindow.hide()
