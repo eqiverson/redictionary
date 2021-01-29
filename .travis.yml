@@ -34,3 +34,13 @@ script:
 branches:
   only:
   - main
+deploy:
+  provider: releases
+  api_key: $token
+  file:
+    - "build/*.deb"
+    - "build/*.dmg"
+    - "build/*.exe"
+    - "build/*.apk"
+  skip_cleanup: true
+  draft: true
