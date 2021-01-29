@@ -37,7 +37,7 @@ branches:
     - master
 before_deploy:
   - ls $TRAVIS_BUILD_DIR
-  - tree $TRAVIS_BUILD_DIR
+  - ls $TRAVIS_BUILD_DIR/build
 deploy:
   provider: releases
   api_key: $token
