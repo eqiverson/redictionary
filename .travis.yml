@@ -41,6 +41,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: $token
+  file_glob: true
   file:
     - "$TRAVIS_BUILD_DIR/build/*.deb"
     - "$TRAVIS_BUILD_DIR/build/*.dmg"
