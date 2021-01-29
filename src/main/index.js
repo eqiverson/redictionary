@@ -86,7 +86,7 @@ function main() {
     if(clip.length <= 25 && clip.length >= 1) {
       clip = clip.trim()
       console.log(clip)
-      if(clip.match(/[`!@#$%^&*()-_=+\|]/))
+      if(clip.match(/[`!@#$%^&*()\-_=+\|]/))
         return // Not common punctuation
       if(clip.match(/^([A-Za-z]{2,20}\s*){1,2}$/) || clip.length <= 5) {
         clip = clip.replace(/[.,:"'']/g, " ")
