@@ -1,0 +1,51 @@
+body
+{font-family: "Hiragino Sans GB", "冬青黑体", "Hiragino Sans GB W3", "冬青黑体简体中文 W3", "微軟正黑體", "HanaMinB", "HanaMinA", auto;　line-high:1.5em;}
+
+.hw {color:mediumblue; font-weight:bold; font-size:125%;padding-right:15px;}
+.pron {color:orangered; padding-right:5px;}
+.etym {display:block;margin-left:2em; color:steelblue;}
+.num {font-weight:bold;font-size:x-small;margin-right: 5px;color:darkred;padding:2px 2px 2px 2px;border-radius:10px;border: 1px solid darkred;}
+.num1 {font-weight:bold;color:darkred;padding-right:5px;}
+.gram {
+display: table-cell;
+margin: 0px auto 0px auto;
+background-color: DARKBLUE;
+color: #FAFAFA;
+text-transform: uppercase;
+font-size: smaller;
+padding: 1px 3px 1px 3px;
+border-radius: 5px;
+}
+dt {display:block;padding-left:1em;}
+.dt1 {display:block;padding-left:10px;}
+dd {display:block; color:darkcyan;}
+dd::before {content:"⌲  "; color:gray;}
+.c-exa {color:dimgray; padding-left:1em; clear:both;}
+
+.gram-n {display:block;font-weight:bold;}
+.cf {display:block;padding-left:2em; color:mediumblue; font-weight:bold;}
+#box /* rounded box */
+{
+display: block;
+margin: 10px 24px;
+padding: 5px 10px;
+border: 1px solid green;
+border-radius: 5px;
+}
+.synt 
+{
+    display: table-cell; /* keep the background color wrapped tight */
+    margin: 0px auto 0px auto; /* keep the block centered */
+	position: relative;
+    bottom: 16px;
+	background-color: #009A31;
+	color: white;
+	font-weight: bold;
+	text-transform:uppercase;
+	padding: 1px 3px;
+	border-radius: 5px;
+}
+
+s-b {color:silver;font-size:xx-small;}
+.list {color:darkblue;font-weight:bold;}
+#box > .list {display:block;padding-right:10px;font-weight:normal;margin-top:-10px;margin-bottom:10px;}
