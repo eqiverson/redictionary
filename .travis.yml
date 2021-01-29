@@ -39,9 +39,9 @@ deploy:
   provider: releases
   api_key: $token
   file:
-    - "build/*.deb"
-    - "build/*.dmg"
-    - "build/*.exe"
-    - "build/*.apk"
+    - "$TRAVIS_BUILD_DIR/build/*.deb"
+    - "$TRAVIS_BUILD_DIR/build/*.dmg"
+    - "$TRAVIS_BUILD_DIR/build/*.exe"
+    - "$TRAVIS_BUILD_DIR/build/*.apk"
   skip_cleanup: true
   draft: true
