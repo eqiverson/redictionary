@@ -45,3 +45,5 @@ deploy:
     - "$TRAVIS_BUILD_DIR/build/*.apk"
   skip_cleanup: true
   draft: true
+  on:
+    branch: main
