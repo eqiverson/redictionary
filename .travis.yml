@@ -34,6 +34,7 @@ script:
 branches:
   only:
   - main
+  - master
 deploy:
   provider: releases
   api_key: $token
