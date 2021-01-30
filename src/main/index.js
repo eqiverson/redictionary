@@ -20,7 +20,7 @@ let fromDict = {}
 
 let iconPath = path.join(__dirname, "icon.ico")
 let tray;
-let visible = true;
+let visible = true, hotkey, hotkeyStr = 'CommandOrControl+Alt+C';
 
 let monitor = clipMonit(500);
 
@@ -79,29 +79,45 @@ function main() {
     visible = true
     regEsc()
   })
-  monitor.on('copy', clip => {
-    console.log('Clipboard changed');
 
-    // am i going to query dict
-    if(clip.length <= 25 && clip.length >= 1) {
-      clip = clip.trim()
-      console.log(clip)
-      if(clip.match(/[`!@#$%^&*()\-_=+\|]/))
-        return // Not common punctuation
-      if(clip.match(/^([A-Za-z]{2,20}\s*){1,2}$/) || clip.length <= 5) {
-        clip = clip.replace(/[.,:"'']/g, " ")
-        mainWindow.show()
-        mainWindow.webContents.send("begin", clip)
-      }
-    }
-  });
-  globalShortcut.register('CommandOrControl+Alt+C', () => {
-    console.log("hotkey")
+  globalShortcut.register(hotkeyStr, r => {
+    console.log(r)
     if(visible)
       mainWindow.hide()
     else
       mainWindow.show()
   })
+  function regHotkey() { // actually clipboard
+    hotkey = true
+    monitor.on('copy', clip => {
+      console.log('Clipboard changed');
+      // am i going to query dict
+      if(clip.length <= 25 && clip.length >= 1) {
+        clip = clip.trim()
+        console.log(clip)
+        if(clip.match(/[`!@#$%^&*()\-_\{\}=+\|]/)) {
+          console.log("ignored for uncommon punctuations")
+          return // Not common punctuation
+        }
+        if(clip.match(/^([A-Za-z]{2,20}\s*){1,2}$/) || clip.length <= 5) {
+          clip = clip.replace(/[.,:"'']/g, " ")
+          while(true) {
+            let newClip = clip.replace("。", "").replace("，", "").replace("《", "").replace("》", "")
+            if(newClip == clip)
+              break
+            else
+              clip = newClip
+          }
+          if(!clip)
+            return
+          mainWindow.show()
+          console.log("begin query " + clip)
+          mainWindow.webContents.send("begin", clip)
+        }
+      }
+    });
+  }
+  regHotkey()
   mainWindow.on("hide", () => {
     visible = false
     globalShortcut.unregister("Escape")
@@ -164,6 +180,17 @@ function main() {
           console.log("No result from " + mdict.name)
         })
       }
+    } else if(args[0] == "setHotkey") {
+      if(args[1])
+        regHotkey()
+      else {
+        monitor.removeAllListeners()
+        hotkey = false
+      }
+      console.log("hotkey " + hotkey)
+    } else if(args[0] == "getHotkey") {
+      console.log(hotkey)
+      mainWindow.webContents.send("hotkey", hotkey)
     }
   })
   mainWindow.webContents.once("dom-ready", () => {

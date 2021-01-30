@@ -2,7 +2,16 @@
   <section>
     <div class="tile is-ancestor">
       <div class="tile is-12 is-vertical">
-        <div class="tile tile1" @keyup="update" @keydown="keydown">
+        <div
+          class="tile tile1"
+          @keyup="update"
+          @keydown="keydown"
+          @focus="
+            typing = true;
+            fromClipboard = false;
+          "
+          @blur="typing = false"
+        >
           <b-field>
             <b-autocomplete
               rounded
@@ -19,14 +28,9 @@
               <template #empty>No results found</template>
             </b-autocomplete>
             <p class="control">
-              <b-dropdown>
-                <template #trigger>
-                  <b-button label="Sort by" icon-right="menu-down" />
-                </template>
-
-                <b-dropdown-item>Match</b-dropdown-item>
-                <b-dropdown-item>Frequency</b-dropdown-item>
-              </b-dropdown>
+              <b-checkbox-button v-model="hotkey" native-value="hotkey">
+                Clipboard
+              </b-checkbox-button>
             </p>
           </b-field>
           <!-- Top tile -->
@@ -54,6 +58,7 @@ const electron = window.require("electron");
 import { matchSorter } from "match-sorter";
 let lastWord, lastQuery;
 let selected, fromServer, hovered;
+
 export default {
   methods: {
     update() {
@@ -78,6 +83,8 @@ export default {
       }
     },
     keydown(e) {
+      this.typing = true;
+      this.fromClipboard = false;
       if (e.code === "ArrowUp" || e.code === "ArrowDown") hovered = true;
       if (e.code === "Enter" && this.filteredDataArray) {
         console.log(e.code);
@@ -92,18 +99,37 @@ export default {
       filteredDataArray: [],
       query: "",
       nores: true,
+      hotkey: [],
+      typing: false,
+      fromClipboard: false,
     };
   },
   components: {
     Card,
   },
+  watch: {
+    hotkey(val) {
+      electron.ipcRenderer.send(
+        "setHotkey",
+        this.hotkey.length === 1 ? true : false
+      );
+    },
+  },
   mounted() {
+    electron.ipcRenderer.on("hotkey", (e, msg) => {
+      console.log("hotkey" + msg);
+      if (msg) this.hotkey = ["hotkey"];
+      else this.hotkey = [];
+    });
     electron.ipcRenderer.on("lookupResult", (e, msg) => {
       this.filteredDataArray = matchSorter(msg, this.query);
       hovered = false;
       console.log(this.filteredDataArray);
       if (fromServer === true) {
-        if (this.filteredDataArray[0]) {
+        if (
+          this.filteredDataArray[0] &&
+          this.filteredDataArray[0].length - this.query.length <= 2
+        ) {
           this.nores = false;
           this.query = this.filteredDataArray[0];
           this.select(this.query);
@@ -114,16 +140,41 @@ export default {
         }
         fromServer = false;
       }
+      if (
+        (this.filteredDataArray.length === 0 ||
+          (this.filteredDataArray.length >= 1 &&
+            this.filteredDataArray[0].length - this.query.length >= 2)) &&
+        !this.typing &&
+        this.fromClipboard
+      ) {
+        this.query = this.query.trim();
+        if (this.query.match(/[A-Za-z]+/g)) {
+          // simple inflection, for most cases, since i didn't see any good inflection lib on npmjs
+          if (this.query.endsWith("ed"))
+            setQuery(this.query.substr(0, this.query.length - 2));
+          else if (this.query.endsWith("ied"))
+            setQuery(this.query.substr(0, this.query.length - 3) + "y");
+          else if (this.query.endsWith("s"))
+            setQuery(this.query.substr(0, this.query.length - 1));
+          else if (this.query.endsWith("ses"))
+            setQuery(this.query.substr(0, this.query.length - 2));
+        }
+      }
     });
-    electron.ipcRenderer.on("begin", (e, msg) => {
-      console.log("From server: " + msg);
+    let setQuery = (msg) => {
+      console.log("set query: " + msg);
 
       fromServer = true;
+
       let input = window.document.querySelector(".is-rounded.input");
       input.focus();
       input.click();
       this.query = msg;
       this.update();
+    };
+    electron.ipcRenderer.on("begin", (e, msg) => {
+      this.fromClipboard = true;
+      setQuery(msg);
     });
     electron.ipcRenderer.on("words", (e, msg) => {
       console.log(msg);
@@ -168,10 +219,12 @@ export default {
         let ele = window.document.querySelector(".is-rounded.input");
         if (ele == document.activeElement || e.ctrlKey) return;
         if (e.key.length == 1) {
+          this.query = "";
           ele.click();
           ele.focus();
         }
       });
+      electron.ipcRenderer.send("getHotkey");
     }, 10);
   },
 };
