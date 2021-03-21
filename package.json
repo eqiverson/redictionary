@@ -61,6 +61,7 @@
     "axios": "^0.18.0",
     "buefy": "^0.9.4",
     "clipboard-monitor": "^1.0.2",
+    "clipboardy": "^2.3.0",
     "match-sorter": "^6.1.0",
     "mdict": "^1.0.3",
     "vue": "^2.5.16",
