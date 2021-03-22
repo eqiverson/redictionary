@@ -125,9 +125,9 @@ function startElectron () {
   } else if (process.env.npm_execpath.endsWith('npm-cli.js')) {
     args = args.concat(process.argv.slice(2))
   }
-
+  console.log(args)
   electronProcess = spawn(electron, args)
-  
+
   electronProcess.stdout.on('data', data => {
     electronLog(data, 'blue')
   })

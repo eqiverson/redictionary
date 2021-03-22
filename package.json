@@ -15,7 +15,7 @@
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
-    "postinstall": "",
+    "postinstall": "chmod +x node_modules/clipboard-event/platform/clipboard-event-handler-linux && patch-package",
     "build:icon": "electron-icon-maker -i ./src/icon.png -o build/"
   },
   "build": {
@@ -60,7 +60,7 @@
     "@mdi/font": "^5.9.55",
     "axios": "^0.18.0",
     "buefy": "^0.9.4",
-    "clipboard-monitor": "^1.0.2",
+    "clipboard-event": "^1.5.0",
     "clipboardy": "^2.3.0",
     "match-sorter": "^6.1.0",
     "mdict": "^1.0.3",
@@ -97,6 +97,7 @@
     "multispinner": "^0.2.1",
     "node-loader": "^0.6.0",
     "node-sass": "^4.9.2",
+    "patch-package": "^6.4.7",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",

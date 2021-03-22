@@ -1,8 +1,11 @@
 import {app, BrowserWindow, Menu, globalShortcut, Tray, nativeImage, clipboard} from 'electron'
-import {readdir, readdirSync} from 'fs';
+import {readdir, readdirSync, lstatSync, existsSync} from 'fs';
 import mdict from "mdict";
 import path from "path"
-import clipMonit from "clipboard-monitor"
+import clipboardListener from "clipboard-event"
+import clipboardy from "clipboardy"
+import fsCache from 'babel-loader/lib/fs-cache';
+
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -21,8 +24,6 @@ let fromDict = {}
 let iconPath = path.join(__dirname, "icon.ico")
 let tray;
 let visible = true, hotkey, hotkeyStr = 'CommandOrControl+Alt+C';
-
-let monitor = clipMonit(500);
 
 function main() {
   /**
@@ -87,9 +88,11 @@ function main() {
     else
       mainWindow.show()
   })
+  clipboardListener.startListening()
   function regHotkey() { // actually clipboard
     hotkey = true
-    monitor.on('copy', clip => {
+    clipboardListener.on('change', clip => {
+      clip = clipboardy.readSync()
       console.log('Clipboard changed');
       // am i going to query dict
       if(clip.length <= 25 && clip.length >= 1) {
@@ -184,7 +187,7 @@ function main() {
       if(args[1])
         regHotkey()
       else {
-        monitor.removeAllListeners()
+        clipboardListener.stopListening()
         hotkey = false
       }
       console.log("hotkey " + hotkey)
