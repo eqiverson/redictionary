@@ -25,3 +25,8 @@ yarn run dev
 # build electron application for production
 yarn run build
 ```
+
+## Todo
+
+- [ ] 更换词典源文件，避免拼音乱码问题
+- [ ] 词汇历史及复习功能

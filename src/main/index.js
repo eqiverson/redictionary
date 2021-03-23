@@ -3,7 +3,6 @@ import {readdir, readdirSync, lstatSync, existsSync} from 'fs';
 import mdict from "mdict";
 import path from "path"
 import clipboardListener from "clipboard-event"
-import clipboardy from "clipboardy"
 import fsCache from 'babel-loader/lib/fs-cache';
 
 /**
@@ -92,7 +91,7 @@ function main() {
   function regHotkey() { // actually clipboard
     hotkey = true
     clipboardListener.on('change', clip => {
-      clip = clipboardy.readSync()
+      clip = clipboard.readText()
       console.log('Clipboard changed');
       // am i going to query dict
       if(clip.length <= 25 && clip.length >= 1) {

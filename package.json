@@ -1,7 +1,7 @@
 {
   "name": "redictionary",
   "homepage": "https://github.com/planetoryd/redictionary",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "planetoryd <planetory@protonmail.com>",
   "description": "dict",
   "license": "GPL-3.0-or-later",
@@ -61,7 +61,6 @@
     "axios": "^0.18.0",
     "buefy": "^0.9.4",
     "clipboard-event": "^1.5.0",
-    "clipboardy": "^2.3.0",
     "match-sorter": "^6.1.0",
     "mdict": "^1.0.3",
     "vue": "^2.5.16",
