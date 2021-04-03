@@ -26,7 +26,3 @@ yarn run dev
 yarn run build
 ```
 
-## Todo
-
-- [ ] 更换词典源文件，避免拼音乱码问题
-- [ ] 词汇历史及复习功能

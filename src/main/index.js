@@ -97,24 +97,27 @@ function main() {
       if(clip.length <= 25 && clip.length >= 1) {
         clip = clip.trim()
         console.log(clip)
-        if(clip.match(/[`!@#$%^&*()\-_\{\}=+\|]/)) {
+        if(clip.match(/[@#$%^&*\_\{\}=+\|]/)) {
           console.log("ignored for uncommon punctuations")
           return // Not common punctuation
         }
-        if(clip.match(/^([A-Za-z]{2,20}\s*){1,2}$/) || clip.length <= 5) {
+        if(clip.match(/^[，。,?;.:'"]*([A-Za-z-]{2,20}\s*){1,2}[，。,?;.:'"]*$/) || clip.match(/^[，。,?;.:'"]*[\u4e00-\u9fa5]{1,6}[，。,?;.:'"]*$/)) {
           clip = clip.replace(/[.,:"'']/g, " ")
           while(true) {
-            let newClip = clip.replace("。", "").replace("，", "").replace("《", "").replace("》", "")
+            let newClip = clip.replace("。", "").replace("，", "").replace("《", "").replace("》", "").replace(",", "").replace(".", "").replace(";", "").replace("；", "")
             if(newClip == clip)
               break
             else
               clip = newClip
           }
+          clip = clip.trim()
           if(!clip)
             return
-          mainWindow.show()
           console.log("begin query " + clip)
           mainWindow.webContents.send("begin", clip)
+          mainWindow.show()
+        } else {
+          console.log("not querying")
         }
       }
     });

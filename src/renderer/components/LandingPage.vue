@@ -187,19 +187,29 @@ export default {
             /(href=\")(.*\/)?([^/"]+)css\"/g,
             '$1static/$2$3css"'
           );
-
-          dx = dx
-            .replace(/`1`([^`]+)`6`/g, '<a class="word">$1</a>')
-            .replace(/`2`([^`]+)`3`/g, '<a class="num">$1</a>')
-            .replace(/`5`([^`]+)`7`/g, '<a class="quote">$1</a>')
-            .replace(/`7`/g, "")
-            .replace(
-              /([\u4e00-\u9fa5]{1,4}词)。/g,
-              '<span class="tag is-info">$1</span>'
-            )
-            .replace(/〕/, "〕<br/>");
+          if (name === "汉语大词典(简体精排)")
+            dx = dx
+              .replace(/`1`([^`]+)`6`/g, '<a class="word">$1</a>')
+              .replace(/`2`([^`]+)`3`/g, '<a class="num">$1</a>')
+              .replace(/`5`([^`]+)`7`/g, '<a class="quote">$1</a>')
+              .replace(
+                /&nbsp;([\u4e00-\u9fa5]{1,2}词)。?/g,
+                '<span class="tag is-info">$1</span>'
+              )
+              .replace(/`7`/g, "")
+              .replace(/〕/, "〕<br/>");
+          if (name === "古汉语常用字字典")
+            dx = dx
+              .replace(/(“[^“”]*”)/g, '<a class="quote">$1</a>')
+              .replace(
+                /[\u2400-\u32bf]&lt;(.{1,4})&gt;/g,
+                '<br/><span class="tag is-info">$1</span>'
+              )
+              .replace(/`1`([^`]+)`2`/g, '<a class="word">$1</a>')
+              .replace(/&quot;+/g, "");
           console.log(dx);
           this.items.push({ dictName: name, rawHtml: dx, id: c++ });
+          window.document.querySelector("div.container").scrollIntoView();
         }
       }
       // this.$nextTick((x) => {
