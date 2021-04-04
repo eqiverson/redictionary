@@ -57,6 +57,7 @@ deploy:
   file_glob: true
   file:
     - "$TRAVIS_BUILD_DIR/build/*.deb"
+    - "$TRAVIS_BUILD_DIR/build/*.pacman"
     - "$TRAVIS_BUILD_DIR/build/*.dmg"
     - "$TRAVIS_BUILD_DIR/build/*.exe"
     - "$TRAVIS_BUILD_DIR/build/*.apk"
