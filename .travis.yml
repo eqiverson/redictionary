@@ -3,10 +3,10 @@ dist: trusty
 language: node_js
 matrix:
   include:
-    - os: osx
-      osx_image: xcode12
-      language: node_js
-      node_js: "12"
+    # - os: osx
+    #   osx_image: xcode12
+    #   language: node_js
+    #   node_js: "12"
     - os: linux
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
@@ -33,9 +33,9 @@ before_install:
       sudo apt-get update || true
       sudo apt-get install -y yarn
       sudo apt-get install -y gettext
-      sudo apt-get install -y libsecret-1-dev libarchive-tools
+      sudo apt-get install -y libsecret-1-dev
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install --no-install-recommends -y icnsutils graphicsmagick xz-utils; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install --no-install-recommends -y icnsutils graphicsmagick xz-utils bsdtar; fi
 install:
   - nvm install 10
   - curl -o- -L https://yarnpkg.com/install.sh | bash
