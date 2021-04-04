@@ -1,5 +1,5 @@
 sudo: required
-dist: focal
+dist: bionic
 virt: lxd
 language: node_js
 matrix:
@@ -37,7 +37,7 @@ before_install:
       sudo apt-get install -y gettext
       sudo apt-get install -y libsecret-1-dev
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install --no-install-recommends -y icnsutils graphicsmagick xz-utils libarchive-tools; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install --no-install-recommends -y icnsutils graphicsmagick xz-utils bsdtar; fi
 install:
   - nvm install 10
   - curl -o- -L https://yarnpkg.com/install.sh | bash
