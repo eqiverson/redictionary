@@ -50,7 +50,11 @@
     },
     "linux": {
       "icon": "build/icons/png",
-      "target": "deb"
+      "category":"Education",
+      "target": [
+        "deb",
+        "pacman"
+      ]
     }
   },
   "dependencies": {

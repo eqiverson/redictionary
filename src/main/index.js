@@ -101,10 +101,10 @@ function main() {
           console.log("ignored for uncommon punctuations")
           return // Not common punctuation
         }
-        if(clip.match(/^[，。,?;.:'"]*([A-Za-z-]{2,20}\s*){1,2}[，。,?;.:'"]*$/) || clip.match(/^[，。,?;.:'"]*[\u4e00-\u9fa5]{1,6}[，。,?;.:'"]*$/)) {
+        if(clip.match(/^[，。,？?;.:'"]*([A-Za-z-]{2,20}\s*){1,2}[，。,？?;.:'"]*$/) || clip.match(/^[，。,？?;.:'"]*[\u4e00-\u9fa5]{1,6}[，。,？?;.:'"]*$/)) {
           clip = clip.replace(/[.,:"'']/g, " ")
           while(true) {
-            let newClip = clip.replace("。", "").replace("，", "").replace("《", "").replace("》", "").replace(",", "").replace(".", "").replace(";", "").replace("；", "")
+            let newClip = clip.replace(/[，。,？?;.:'"]/g, "")
             if(newClip == clip)
               break
             else
