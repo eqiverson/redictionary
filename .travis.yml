@@ -1,6 +1,5 @@
 sudo: required
 dist: bionic
-virt: lxd
 language: node_js
 matrix:
   include:
