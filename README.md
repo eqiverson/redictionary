@@ -1,5 +1,7 @@
 # redictionary
 
+> Linux - 文言文字典
+
 [![Build Status](https://travis-ci.com/planetoryd/redictionary.svg?branch=main)](https://travis-ci.com/planetoryd/redictionary)
 
 - [x] Mdict(mdx) format
@@ -9,6 +11,11 @@
 
 ```bash
 sudo apt install xsel # Required to use auto-detect clipboard
+```
+
+```bash
+sudo dpkg -i <pkg>
+sudo chmod +x /opt/redictionary/resources/app.asar.unpacked/node_modules/clipboard-event/platform/*
 ```
 
 The dictionary hides when minimizes, and it will be shown when necessary. Tray icon might appear, I don't know.

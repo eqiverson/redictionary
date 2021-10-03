@@ -41,6 +41,7 @@
             :key="item.id"
             :dictName="item.dictName"
             :rawHtml="item.rawHtml"
+            v-show="loaded"
           >
           </card>
           <b-notification type="is-warning" role="alert" v-model="nores">
@@ -64,8 +65,8 @@ export default {
     update() {
       if (
         this.query != "" &&
-        this.query !== lastWord &&
-        typeof this.query === "string"
+        typeof this.query === "string" &&
+        (this.query !== lastWord || this.filteredDataArray.length === 0)
       ) {
         console.log(this.query);
         electron.ipcRenderer.send("lookup", this.query);
@@ -77,6 +78,7 @@ export default {
         console.log(option);
         selected = option;
         this.loading = true;
+        this.loaded = false;
         electron.ipcRenderer.send("word", selected);
         lastQuery = option;
         this.loading = false;
@@ -102,6 +104,7 @@ export default {
       hotkey: [],
       typing: false,
       fromClipboard: false,
+      loaded: false,
     };
   },
   components: {
@@ -165,6 +168,7 @@ export default {
       console.log("set query: " + msg);
 
       fromServer = true;
+      this.loaded = false;
 
       let input = window.document.querySelector(".is-rounded.input");
       input.focus();
@@ -212,6 +216,10 @@ export default {
           window.document.querySelector("div.container").scrollIntoView();
         }
       }
+      this.$nextTick((x) => {
+        this.loaded = true;
+      });
+
       // this.$nextTick((x) => {
       //   const styles = window.document.querySelectorAll(
       //     "div.card-content link"

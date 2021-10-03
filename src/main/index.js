@@ -121,6 +121,7 @@ function main() {
         }
       }
     });
+    clipboardListener.startListening()
   }
   regHotkey()
   mainWindow.on("hide", () => {
