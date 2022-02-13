@@ -1,6 +1,6 @@
 # redictionary
 
-> Linux - 文言文字典
+> Linux - 中英、文言文离线字典
 
 [![Build Status](https://travis-ci.com/planetoryd/redictionary.svg?branch=main)](https://travis-ci.com/planetoryd/redictionary)
 
@@ -18,7 +18,7 @@ sudo dpkg -i <pkg>
 sudo chmod +x /opt/redictionary/resources/app.asar.unpacked/node_modules/clipboard-event/platform/*
 ```
 
-The dictionary hides when minimizes, and it will be shown when necessary. Tray icon might appear, I don't know.
+The dictionary hides when minimizes, and it will be shown when necessary.
 
 #### Build Setup
 
@@ -32,4 +32,9 @@ yarn run dev
 # build electron application for production
 yarn run build
 ```
+
+#### What for
+
+There are many dictionaries, but an opensource and offline dictionary that is for linux didn't exist. The dictionaries embeded are personally collected by me, which I hope will be replaced by creative-common ones.
+
 
