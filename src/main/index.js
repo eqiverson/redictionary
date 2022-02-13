@@ -76,7 +76,6 @@ function main() {
     mainWindow.hide()
   })
   mainWindow.on('show', function () {
-    tray.setHighlightMode('always')
     visible = true
     regEsc()
   })
