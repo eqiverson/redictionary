@@ -22,6 +22,7 @@ let fromDict = {}
 
 let iconPath = path.join(__dirname, "icon.ico")
 let tray;
+let lastClip
 let visible = true, hotkey, hotkeyStr = 'CommandOrControl+Alt+C';
 
 function main() {
@@ -91,7 +92,13 @@ function main() {
   function regHotkey() { // actually clipboard
     hotkey = true
     clipboardListener.on('change', clip => {
+      if(!hotkey) return
       clip = clipboard.readText()
+      if(clip == lastClip) {
+        mainWindow.show()
+        return
+      }
+      lastClip = clip
       console.log('Clipboard changed');
       // am i going to query dict
       if(clip.length <= 25 && clip.length >= 1) {
@@ -160,7 +167,7 @@ function main() {
           w.forEach(val => {
             let k = val.toString()
             words.add(k)
-            if(!fromDict[k]) fromDict[k] = []
+            if(!fromDict[k] || !fromDict[k].push) fromDict[k] = []
             fromDict[k].push(mdict.name)
           })
           if(i == 0) {

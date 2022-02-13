@@ -3,14 +3,10 @@ dist: bionic
 language: node_js
 matrix:
   include:
-    # - os: osx
-    #   osx_image: xcode12
-    #   language: node_js
-    #   node_js: "12"
     - os: linux
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
-      node_js: "12"
+      node_js: "14"
 cache:
   directories:
     - node_modules

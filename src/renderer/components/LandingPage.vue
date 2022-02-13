@@ -74,7 +74,7 @@ export default {
       }
     },
     select(option) {
-      if (option && typeof option === "string" && option !== lastQuery) {
+      if (option && typeof option === "string") {
         console.log(option);
         selected = option;
         this.loading = true;
